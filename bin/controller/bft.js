@@ -1,14 +1,17 @@
+const BOT = require('../lib/bot.js');
+const HELPERS = require('../lib/helpers.js');
+
 // Respuestas de prefijo bf
 const bfResponse = (req, message) => {
   let reqArr = req.split(" ");
 
   // Si no tiene por lo menos 2 elementos termina acá
   if(reqArr.length < 2){
-    message.channel.send(getRandItem(customResponses.unknown));
+    message.channel.send(HELPERS.getRandItem(BOT.customResponses.unknown));
     return false;
   }
 
-  message.channel.send(getRandItem(customResponses.waiting));
+  message.channel.send(HELPERS.getRandItem(BOT.customResponses.waiting));
 
   let params = {
     stat: reqArr[0].trim(),
@@ -23,7 +26,7 @@ const bfResponse = (req, message) => {
     if (!error && response.statusCode == 200) {
       let statsMap = bftStatsMap(body);
       if(statsMap === false){
-        message.channel.send(getRandItem(customResponses.unfound));
+        message.channel.send(HELPERS.getRandItem(BOT.customResponses.unfound));
         return false;
       }
 
