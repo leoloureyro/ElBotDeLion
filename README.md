@@ -20,6 +20,7 @@ La sintaxis para pedir stats es la siguiente:
 ```
 ... donde `stat` puede ser:
 ```
+stats
 btrScore
 kills
 deaths
