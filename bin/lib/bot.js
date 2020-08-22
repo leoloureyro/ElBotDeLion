@@ -1,4 +1,4 @@
-const HELPERS = require('./bin/lib/helpers.js');
+const HELPERS = require('./helpers.js');
 
 const customResponses = {
   greeting: [
