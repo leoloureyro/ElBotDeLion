@@ -1,4 +1,6 @@
 const HELPERS = require('./helpers.js');
+const BFT = require('../controller/bft.js');
+const tasteDive = require('../controller/taste-dive.js');
 
 const customResponses = {
   greeting: [
@@ -52,7 +54,8 @@ const listOfPrefixes = [
   'bf',
   'queonda',
   'hola', 'buenas',
-  'puto', 'gato', 'gay', 'sorete', 'gil'
+  'puto', 'gato', 'gay', 'sorete', 'gil',
+  'recomendame'
 ];
 
 // Separa prefijos de mensajes y lo devuelve como objeto ó falso si no encuentra prefijo
@@ -73,8 +76,37 @@ const validatePrefix = messageTxt => {
   return false;
 }
 
+// Identifica el tipo de prefijo y procesa el mensaje
+const handleResponse = (obj, message) => {
+  switch(obj.prefix){
+    case 'bf':
+      BFT.bfResponse(message, obj.message);
+      break;
+    case 'queonda':
+      message.channel.send(HELPERS.getRandItem(BOT.customResponses.maySuggest));
+      break;
+    case 'hola':
+    case 'buenas':
+      message.channel.send(HELPERS.getRandItem(BOT.customResponses.greeting));
+      break;
+    case 'puto':
+    case 'gato':
+    case 'gay':
+    case 'sorete':
+    case 'gil':
+      message.channel.send(`Más ${obj.prefix} serás vos.. re${obj.prefix}`);
+      break;
+    case 'recomendame':
+      let recom = tasteDive.TasteDive;
+      new recom(message, obj.message);
+      break;
+  }
+}
+
+
 module.exports = {
   customResponses,
   listOfPrefixes,
-  validatePrefix
+  validatePrefix,
+  handleResponse
 }

@@ -4,7 +4,7 @@
   "description": "Un bot buenísimo para que nadie me extrañe en Discord",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "nodemon main.js"
   },
   "author": "Xtreme696",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4",
     "request": "^2.88.2"
   }
 }
