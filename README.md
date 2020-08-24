@@ -4,6 +4,7 @@
 * [Info general](#info-general)
 * [Hosting](#hosting)
 * [BF4 Stats](#bf4-stats)
+* [Recomendaciones](#recomendaciones)
 
 ## Info general
 El Bot de Lion es un BOT de Discord buenísimo que estoy haciendo para el FApla.
@@ -54,4 +55,11 @@ scoreSquad
 weapons
 topWeapons
 score
+```
+
+## Recomendaciones
+Con el poder de *TestDive* EbdL puede recomendarte películas, libros, música, videojuegos, etc. basado en una o más referencias del usuario.
+La sintaxis para pedirle una recomendación es:
+```
+!recomendame [referencias (separadas por coma)] --[strict]
 ```
