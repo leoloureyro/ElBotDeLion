@@ -80,14 +80,14 @@ const validatePrefix = messageTxt => {
 const handleResponse = (obj, message) => {
   switch(obj.prefix){
     case 'bf':
-      BFT.bfResponse(message, obj.message);
+      BFT.bfResponse(message, obj.message, module.exports);
       break;
     case 'queonda':
-      message.channel.send(HELPERS.getRandItem(BOT.customResponses.maySuggest));
+      message.channel.send(HELPERS.getRandItem(customResponses.maySuggest));
       break;
     case 'hola':
     case 'buenas':
-      message.channel.send(HELPERS.getRandItem(BOT.customResponses.greeting));
+      message.channel.send(HELPERS.getRandItem(customResponses.greeting));
       break;
     case 'puto':
     case 'gato':

@@ -1,8 +1,8 @@
-const BOT = require('../lib/bot.js');
-const HELPERS = require('../lib/helpers.js');
+// const BOT = require('./../lib/bot.js');
+const HELPERS = require('./../lib/helpers.js');
 
 // Respuestas de prefijo bf
-const bfResponse = (message, req) => {
+const bfResponse = (message, req, BOT) => {
   let reqArr = req.split(" ");
 
   // Si no tiene por lo menos 2 elementos termina acá
