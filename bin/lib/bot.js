@@ -49,12 +49,12 @@ const customResponses = {
     'Che pero qué tema de mierda jaja'
   ],
   idiom: [
-    'Ahí va algo en árabe -se lee de derecha a izquierda-: eel euq le otup'
-    'Mirá, mirá, hablo alemán: te gusten el pedazen, troleken a cuerden'
-    'Si no entendés chino googlea la traducción: 他妈的那个读的人'
-    'Brazuca te gusta? banana nao tem carozo mais tem filamento grosso que dificulta a masticazao'
-    'Nigga: yo madafaka nigga yo pussy pussy yo nigga'
-    'Albañil del conurbano: Ajopyta nde petei apysarapo nde arruinado reikoa'
+    'Ahí va algo en árabe -se lee de derecha a izquierda-: eel euq le otup',
+    'Mirá, mirá, hablo alemán: te gusten el pedazen, troleken a cuerden',
+    'Si no entendés chino googlea la traducción: 他妈的那个读的人',
+    'Brazuca te gusta? banana nao tem carozo mais tem filamento grosso que dificulta a masticazao',
+    'Nigga: yo madafaka nigga yo pussy pussy yo nigga',
+    'Albañil del conurbano: Ajopyta nde petei apysarapo nde arruinado reikoa',
     'Porco Dio cane tu si che sei uno stronzo'
   ]
 }
@@ -111,7 +111,7 @@ const handleResponse = (obj, message) => {
       new recom(message, obj.message);
       break;
     case 'idioma':
-      message.channel.send(HELPERS.getRandItem(BOT.customResponses.idiom));
+      message.channel.send(HELPERS.getRandItem(customResponses.idiom));
       break;
   }
 }
