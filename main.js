@@ -23,15 +23,7 @@ client.on('message', message => {
 
   if(message.content.startsWith('!')){
     let messageTxt = message.content.slice(1).trim();
-    let responseObj = BOT.validatePrefix(messageTxt);
-
-    if(responseObj === false){
-      message.channel.send(HELPERS.getRandItem(BOT.customResponses.unknown));
-      return true;
-    } else {
-      BOT.handleResponse(responseObj, message);
-      return true;
-    }
+    BOT.handleResponse(BOT.handlePrefix(messageTxt), message);
   } else if((message.content.startsWith('-p') || message.content.startsWith('-P')) && Math.floor(Math.random() * 4) == 0){
     setTimeout(() => {
       message.channel.send(HELPERS.getRandItem(BOT.customResponses.badSong))

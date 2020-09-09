@@ -5,33 +5,74 @@ const HELPERS = require('./../lib/helpers.js');
 const bfResponse = (message, req, BOT) => {
   let reqArr = req.split(" ");
 
-  // Si no tiene por lo menos 2 elementos termina acá
-  if(reqArr.length < 2){
+  // Si no tiene elementos termina acá
+  if(reqArr.length < 1){
     message.channel.send(HELPERS.getRandItem(BOT.customResponses.unknown));
     return false;
   }
 
-  message.channel.send(HELPERS.getRandItem(BOT.customResponses.waiting));
-
+  let request = require('request');
+  let reqOptions;
   let params = {
-    stat: reqArr[0].trim(),
-    player: reqArr[1].trim()
+    req: reqArr[0].trim(),
+    players: []
+  }
+  for(let i = 1; i < reqArr.length; i++){
+    params.players.push(reqArr[i].trim());
   }
 
-  let request = require('request');
-  let options = {
-    url: `https://battlefieldtracker.com/bf4/stats/pc/${params.player}`,
-  };
-  request(options, (error, response, body) => {
-    if (!error && response.statusCode == 200) {
-      let statsMap = bftStatsMap(body);
-      if(statsMap === false){
-        message.channel.send(HELPERS.getRandItem(BOT.customResponses.unfound));
+  switch(params.req){
+    case 'help':
+    case 'ayuda':
+      let helpMsg = `Para ver la lista de comandos completa leé mi docu en: *https://github.com/xtreme696/ElBotDeLion*`;
+      message.channel.send(helpMsg);
+      break;
+
+    case 'leader':
+    case 'lider':
+      let leaderMsg = `Que lidere ${HELPERS.getRandItem(params.players)}`;
+      message.channel.send(leaderMsg);
+      break;
+
+    case 'update':
+    case 'actualizar':
+      if(!params.players.length){
+        message.channel.send(HELPERS.getRandItem(BOT.customResponses.unknown));
         return false;
       }
 
-      switch(params.stat){
-        case 'stats':
+      message.channel.send(HELPERS.getRandItem(BOT.customResponses.waiting));
+
+      reqOptions = {
+        url: `https://battlefieldtracker.com/bf4/update/pc/${params.players[0]}`,
+      };
+      request(reqOptions, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+          message.channel.send('Listo, hice lo que pude.. pero acordate que si las actualizaste hace poco puede que tengas que esperar unos minutos más antes de volver a hacerlo');
+        } else {
+          message.channel.send('No che, no pude.. no sé qué onda');
+        }
+      });
+      break;
+
+    case 'stats':
+      if(!params.players.length){
+        message.channel.send(HELPERS.getRandItem(BOT.customResponses.unknown));
+        return false;
+      }
+
+      message.channel.send(HELPERS.getRandItem(BOT.customResponses.waiting));
+
+      reqOptions = {
+        url: `https://battlefieldtracker.com/bf4/stats/pc/${params.players[0]}`,
+      };
+      request(reqOptions, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+          let statsMap = bftStatsMap(body);
+          if(statsMap === false){
+            message.channel.send(HELPERS.getRandItem(BOT.customResponses.unfound));
+            return false;
+          }
           let newMessage = `score: ${statsMap.score}
 rank: ${statsMap.rank}
 kills: ${statsMap.kills}
@@ -40,21 +81,38 @@ timePlayed: ${statsMap.timePlayed}
 winRate: ${statsMap.winRate}
 `;
           message.channel.send(newMessage);
-          break;
+        }
+      });
+      break;
 
-        default:
-          if(typeof(statsMap[params.stat]) != 'undefined'){
-            message.channel.send(`${params.stat}: ${statsMap[params.stat]}`);
+    default:
+      if(!params.players.length){
+        message.channel.send(HELPERS.getRandItem(BOT.customResponses.unknown));
+        return false;
+      }
+
+      message.channel.send(HELPERS.getRandItem(BOT.customResponses.waiting));
+
+      reqOptions = {
+        url: `https://battlefieldtracker.com/bf4/stats/pc/${params.players[0]}`,
+      };
+      request(reqOptions, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+          let statsMap = bftStatsMap(body);
+          if(statsMap === false){
+            message.channel.send(HELPERS.getRandItem(BOT.customResponses.unfound));
+            return false;
+          }
+          if(typeof(statsMap[params.req]) != 'undefined'){
+            message.channel.send(`${params.req}: ${statsMap[params.req]}`);
           } else {
             message.channel.send('Sé que me preguntaste algo del battlefield pero sinceramente no entendí qué..');
           }
+        }
+      })
 
-        return true;
-      }
-    } else {
-      return false;
-    }
-  });
+    return true;
+  }
 }
 
 const bftStatsMap = doc => {

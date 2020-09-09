@@ -1,6 +1,9 @@
 const HELPERS = require('./helpers.js');
 const BFT = require('../controller/bft.js');
+const PKR = require('../controller/pkr.js');
 const tasteDive = require('../controller/taste-dive.js');
+const dotenv = require("dotenv");
+dotenv.config();
 
 const customResponses = {
   greeting: [
@@ -84,34 +87,16 @@ const customResponses = {
   ]
 }
 
-const listOfPrefixes = [
-  'bf',
-  'queonda',
-  'hola', 'buenas',
-  'puto', 'gato', 'gay', 'sorete', 'gil',
-  'recomendame',
-  'idioma',
-  'ayuda',
-  'profecia',
-  'filosofia'
-];
-
-// Separa prefijos de mensajes y lo devuelve como objeto ó falso si no encuentra prefijo
-const validatePrefix = messageTxt => {
+// Separa prefijos de mensajes y lo devuelve como objeto
+const handlePrefix = messageTxt => {
   let messageArr = messageTxt.split(" ");
-  let possiblePrefix = messageArr.shift().toLowerCase();
-
-  for(let prefixItem of listOfPrefixes){
-    if(possiblePrefix == prefixItem){
-      let prefixObj = {
-        prefix: possiblePrefix,
-        message: messageArr.join(" ")
-      }
-      return prefixObj;
-    }
+  let prefix = messageArr.shift().toLowerCase();
+  let prefixObj = {
+    prefix: prefix,
+    message: messageArr.join(" ")
   }
 
-  return false;
+  return prefixObj;
 }
 
 // Identifica el tipo de prefijo y procesa el mensaje
@@ -122,6 +107,9 @@ const handleResponse = (obj, message) => {
       break;
     case 'queonda':
       message.channel.send(HELPERS.getRandItem(customResponses.maySuggest));
+      break;
+    case 'host':
+      message.channel.send(`Me está hosteando **${process.env.HOST}**`);
       break;
     case 'hola':
     case 'buenas':
@@ -150,13 +138,22 @@ const handleResponse = (obj, message) => {
     case 'filosofia':
       message.channel.send(HELPERS.getRandItem(customResponses.filosofia));
       break;
+    case 'version':
+    case 'v':
+      message.channel.send(`Soy la versión **${process.env.npm_package_version}**`);
+      break;
+    case 'pkr':
+      PKR.pkrAction(message, obj.message);
+      break;
+
+    default:
+      message.channel.send(HELPERS.getRandItem(customResponses.unknown));
   }
 }
 
 
 module.exports = {
   customResponses,
-  listOfPrefixes,
-  validatePrefix,
+  handlePrefix,
   handleResponse
 }
