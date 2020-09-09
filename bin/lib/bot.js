@@ -56,6 +56,31 @@ const customResponses = {
     'Nigga: yo madafaka nigga yo pussy pussy yo nigga',
     'Albañil del conurbano: Ajopyta nde petei apysarapo nde arruinado reikoa',
     'Porco Dio cane tu si che sei uno stronzo'
+  ],
+  help: [
+    'Para no quedar como un boludo hablando solo tenés que tipear !comando, y reemplazar COMANDO por uno de los siguientes \n hola, buenas para que te salude \n queonda fulano para que te tire la posta sobre algún chabon o cosa \n puteame si te animas \n recomendame cosa1, cosa2 separado por comas para que te tire data de algo similar \n idioma si querés que te enseñe lo que aprendí viajando por el mundo \n profecia para que adivine tu futuro \n filosofia para recibir una frase inspiradora \n ayuda si tenés ganas de hinchar los huevos y leer todo otra vez'
+  ],
+  profecia: [
+    'Hoy te van a romper los huevos del laburo',
+    'El vecino de arriba, abajo o al lado se va a poner a hacer ruido cuando menos te lo esperes',
+    'Se te va a enfriar el mate por pelotudear',
+    'Un ser con cromosomas XX te romperá las bolas con la cosa más insólita y no habrá forma de evitarlo',
+    'En la próxima cagada vas a tapar el inodoro',
+    'Próximamente la pondrás',
+    'Se te va a vencer un impuesto',
+    'Vas a cabecear balas en el bayou como un campeón',
+    'Revisá bien los bolsillos del pantalón/campera, te vas a encontrar unos mangos',
+    '¿De verdad creés en estas boludeces?'
+  ],
+  filosofia: [
+    'A buen entendedor, menos soplamocos',
+    'Hay dos palabras que te abrirán muchas puertas: Tire y Empuje',
+    'El cornudo y el pelotudo tienen algo en común: todos saben su condición menos él mismo',
+    'Lo importante no es ganar, sino hacer perder al otro',
+    'El que sabe, sabe. El que no, es jefe',
+    'Nadie sabe lo que tiene hasta que se muda',
+    'Es al pedo empujar cuando la mecha es corta, pues la cueva se desespera y los huevos se hacen torta',
+    'Las mejores cosas de este mundo no se pueden comprar... porque tenemos sueldos de mierda'
   ]
 }
 
@@ -65,7 +90,10 @@ const listOfPrefixes = [
   'hola', 'buenas',
   'puto', 'gato', 'gay', 'sorete', 'gil',
   'recomendame',
-  'idioma'
+  'idioma',
+  'ayuda',
+  'profecia',
+  'filosofia'
 ];
 
 // Separa prefijos de mensajes y lo devuelve como objeto ó falso si no encuentra prefijo
@@ -112,6 +140,15 @@ const handleResponse = (obj, message) => {
       break;
     case 'idioma':
       message.channel.send(HELPERS.getRandItem(customResponses.idiom));
+      break;
+    case 'ayuda':
+      message.channel.send(HELPERS.getRandItem(customResponses.help));
+      break;
+    case 'profecia':
+      message.channel.send(HELPERS.getRandItem(customResponses.profecia));
+      break;
+    case 'filosofia':
+      message.channel.send(HELPERS.getRandItem(customResponses.filosofia));
       break;
   }
 }
