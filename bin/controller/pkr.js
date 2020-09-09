@@ -39,7 +39,7 @@ class PKR {
     this.discarded.push(this.maze.splice(0, num));
   }
 
-  deal(num = 1, hidden = false, player = 'fantasma'){
+  deal(num = 1, hidden = false, player = 'casa'){
     let hide = ''
     if(hidden) hide = '||';
 
@@ -65,8 +65,7 @@ class PKR {
   play(){
     if(!this.flop){
       this.flop = this.deal(3);
-      this.message.channel.send(`Va el Flop:
-${this.flop}`);
+      this.message.channel.send(`Va el Flop:\n${this.flop}`);
     } else {
       this.fourth();
     }
@@ -75,8 +74,7 @@ ${this.flop}`);
   fourth(){
     if(!this.turn){
       this.turn = this.deal();
-      this.message.channel.send(`Va el Turn:
-${this.flop}${this.turn}`);
+      this.message.channel.send(`Va el Turn:\n${this.flop}${this.turn}`);
     } else {
       this.fifth();
     }
@@ -85,14 +83,13 @@ ${this.flop}${this.turn}`);
   fifth(){
     if(!this.river){
       this.river = this.deal();
-      this.message.channel.send(`Va el River:
-${this.flop}${this.turn}${this.river}`);
+      this.message.channel.send(`Va el River:\n${this.flop}${this.turn}${this.river}`);
     } else {
       this.message.channel.send('Ya repartí todas vieja.. quién ganó?');
     }
   }
 
-  bet(num, player = 'fantasma'){
+  bet(num, player = 'casa'){
     if(!this.players.hasOwnProperty(player)){
       this.players[player] = {
         hand: '',
