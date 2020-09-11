@@ -6,7 +6,12 @@
 * [BF4 Stats](#bf4-stats)
 * [Recomendaciones](#recomendaciones)
 * [Azar](#azar)
-* [Score](#score)/puntaje
+* [Score](#score)
+* [Slots](#slots)
+* [Poker](#poker)
+* [Idioma](#idioma)
+* [Profecía](#profecia)
+* [Filosofía](#filosofia)
 
 
 ## Info general
