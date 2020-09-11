@@ -41,7 +41,7 @@ class Score {
 class Pkr {
   constructor(message, cardsNum = 52){
     this.message = message;
-    this.maze = [
+    this.deck = [
       `2♠`, `2♣`, `2♥`, `2♦`,
       `3♠`, `3♣`, `3♥`, `3♦`,
       `4♠`, `4♣`, `4♥`, `4♦`,
@@ -67,13 +67,13 @@ class Pkr {
   }
 
   shuffle() {
-    for (let i = this.maze.length - 1; i > 0; i--) {
+    for (let i = this.deck.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [this.maze[i], this.maze[j]] = [this.maze[j], this.maze[i]];
+      [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
     }
   }
 
-  discard(num = 0, cards = this.maze){
+  discard(num = 0, cards = this.deck){
     this.discarded.push(cards.splice(0, num));
   }
 
@@ -84,10 +84,10 @@ class Pkr {
     let hand = '';
 
     for(let i = num; i > 0; i--){
-      if(!this.maze.length){
+      if(!this.deck.length){
         return hand;
       }
-      hand += hide + this.maze.pop() + hide + ' ';
+      hand += hide + this.deck.pop() + hide + ' ';
     }
 
     this.checkForPlayer(player);
@@ -219,9 +219,9 @@ class Slots {
     this.score = 0;
     this._cols = 3;
     this._multipliers = {
-      ':bell:': 1,
-      ':bomb:': 0.8,
-      ':apple:': 1,
+      ':bell:': 0,
+      ':bomb:': 0,
+      ':apple:': 0,
       ':banana:': 1.2,
       ':skull:': 0.8,
       ':space_invader:': 1.5
@@ -231,7 +231,7 @@ class Slots {
   lever(bet = 0){
     // TODO función... el player y score lo maneja el switch case
     this.score += bet;
-    for(let i = 0; i < cols; i++){
+    for(let i = 0; i < this._cols; i++){
       this.turn.push(this.figure);
     }
     this.updateScore();
@@ -241,12 +241,17 @@ class Slots {
 
   updateScore(){
     if(!this.turn.length) return false; // En caso de que algo falle y no haya cargado el turno
-    this.score *= this._multipliers[this.turn[0]];
     if(this.turn[0] == this.turn[1]){
       this.score *= 10;
       if(this.turn[1] == this.turn[2]){
         this.score *= 50;
       }
+      // Multipliers
+      if(this._multipliers[this.turn[0]] > 0){
+        this.score *= this._multipliers[this.turn[0]];
+      }
+    } else {
+      this.score *= this._multipliers[this.turn[0]];
     }
     this.score = Math.floor(this.score);
   }
@@ -288,6 +293,7 @@ const casino = (message, req) => {
   switch(params.req){
     // Pkr
     case 'nuevo':
+    case 'new':
       let cardsNum = 52;
       if(params.rest.length && !isNaN(params.rest[0])){
         cardsNum = params.rest[0];
@@ -324,12 +330,13 @@ const casino = (message, req) => {
       PKR.play();
       break;
     case 'mazo':
+    case 'deck':
       if(gameUndefined()){
         message.channel.send('Primero hay que empezar un juego.. poné \`nuevo\`');
         return false;
       }
-      message.channel.send(`Quedan ${PKR.maze.length} cartas:
-${PKR.maze.join(" ")}
+      message.channel.send(`Quedan ${PKR.deck.length} cartas:
+${PKR.deck.join(" ")}
 *.. Obviamente ahora las tengo que mezclar de nuevo.... lpm*`);
       // Vuelve a mezclar después de mostrar
       PKR.shuffle();
@@ -344,8 +351,9 @@ ${PKR.maze.join(" ")}
       PKR.shuffle();
       message.channel.send('Ya mezclé otra vé.. contento?');
       break;
-    case 'bet':
     case '+':
+    case 'bet':
+    case 'apuesta':
       if(gameUndefined()){
         message.channel.send('A dónde mierda querés apostar? Primero poné \`nuevo\` capo.. pero tan difícil es?');
         break;
@@ -430,6 +438,7 @@ ${PKR.maze.join(" ")}
         message.channel.send(HELPERS.getRandItem([
           'Joya',
           'Entendido',
+          'Roger',
           'Oka'
         ]));
         break;
@@ -449,12 +458,11 @@ ${PKR.maze.join(" ")}
     default:
       message.channel.send('Si quisiste decir "algo de póker" se vé que lo hiciste mal porque no te entendí un porongo.. va de nuevo dale');
   }
-
 }
 
 module.exports = {
-  PKR,
   SCORE,
   PKR,
+  SLOTS,
   casino
 }
