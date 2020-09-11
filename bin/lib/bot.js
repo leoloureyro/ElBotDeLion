@@ -1,6 +1,6 @@
 const HELPERS = require('./helpers.js');
 const BFT = require('../controller/bft.js');
-const PKR = require('../controller/pkr.js');
+const CASINO = require('../controller/casino.js');
 const tasteDive = require('../controller/taste-dive.js');
 const dotenv = require("dotenv");
 dotenv.config();
@@ -143,7 +143,30 @@ const handleResponse = (obj, message) => {
       message.channel.send(`Soy la versión **${process.env.npm_package_version}**`);
       break;
     case 'pkr':
-      PKR.pkrAction(message, obj.message);
+      CASINO.casino(message, obj.message);
+      break;
+    case 'dice':
+    case 'dado':
+      message.channel.send(':game_die: ' + Math.ceil(Math.random() * 6));
+      break;
+    case 'moneda':
+    case 'flip':
+    case 'coin':
+      message.channel.send(HELPERS.getRandItem(['Cara', 'Seca']));
+      break;
+    case 'slots':
+    case 'maquinita':
+    // TODO
+      message.channel.send('');
+      break;
+    case 'scores':
+    case 'puntajes':
+      message.channel.send(CASINO.SCORE.getScores());
+      break;
+    case 'score':
+    case 'puntaje':
+    case 'puntos':
+      message.channel.send(CASINO.SCORE.getScore(message.author.username));
       break;
 
     default:
