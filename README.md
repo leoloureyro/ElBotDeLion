@@ -88,7 +88,7 @@ La sintaxis para pedirle una recomendación es:
 Si no estás seguro de algo podés apostarlo al azar con EbdL:
 * `!dado/dice` para girar un dado.
 * `!moneda/coin/flip` para lanzar una moneda.
-* `!bola8/8ball` para preguntarle a la mística bola 8.
+* `!bola8/8ball [pregunta]` para preguntarle a la mística bola 8.
 
 
 ## Score
