@@ -1,6 +1,6 @@
 const HELPERS = require('./helpers.js');
 const BFT = require('../controller/bft.js');
-const PKR = require('../controller/pkr.js');
+const CASINO = require('../controller/casino.js');
 const tasteDive = require('../controller/taste-dive.js');
 const dotenv = require("dotenv");
 dotenv.config();
@@ -84,6 +84,29 @@ const customResponses = {
     'Nadie sabe lo que tiene hasta que se muda',
     'Es al pedo empujar cuando la mecha es corta, pues la cueva se desespera y los huevos se hacen torta',
     'Las mejores cosas de este mundo no se pueden comprar... porque tenemos sueldos de mierda'
+  ],
+  eightBall: [
+    'En mi opinión, sí',
+    'Es cierto',
+    'Es decididamente así',
+    'Probablemente',
+    'Buen pronóstico',
+    'Todo apunta a que sí',
+    'Sin duda',
+    'Sí',
+    'Sí - definitivamente',
+    'Debes confiar en ello',
+    'Respuesta vaga, vuelve a intentarlo',
+    'Pregunta en otro momento',
+    'Será mejor que no te lo diga ahora',
+    'No puedo predecirlo ahora',
+    'Concéntrate y vuelve a preguntar',
+    'Puede ser',
+    'No cuentes con ello',
+    'Mi respuesta es no',
+    'Mis fuentes me dicen que no',
+    'Las perspectivas no son buenas',
+    'Muy dudoso'
   ]
 }
 
@@ -122,6 +145,7 @@ const handleResponse = (obj, message) => {
     case 'gil':
       message.channel.send(`Más ${obj.prefix} serás vos.. re${obj.prefix}`);
       break;
+    case 'recommend':
     case 'recomendame':
       let recom = tasteDive.TasteDive;
       new recom(message, obj.message);
@@ -143,7 +167,48 @@ const handleResponse = (obj, message) => {
       message.channel.send(`Soy la versión **${process.env.npm_package_version}**`);
       break;
     case 'pkr':
-      PKR.pkrAction(message, obj.message);
+      CASINO.casino(message, obj.message);
+      break;
+    case 'dice':
+    case 'dado':
+      message.channel.send(':game_die: ' + Math.ceil(Math.random() * 6));
+      break;
+    case '8ball':
+    case 'bola8':
+      message.channel.send(':8ball: ' + HELPERS.getRandItem(customResponses.eightBall));
+      break;
+    case 'moneda':
+    case 'flip':
+    case 'coin':
+      message.channel.send(HELPERS.getRandItem(['Cara', 'Seca']));
+      break;
+    case 'slots':
+    case 'maquinita':
+      let slotsBet = 0;
+      if(obj.message != '' && !isNaN(obj.message)) slotsBet = obj.message;
+      CASINO.SCORE.changeScore(message.author.username, 0 - slotsBet);
+      message.channel.send(CASINO.SLOTS.lever(slotsBet));
+      CASINO.SCORE.changeScore(message.author.username, CASINO.SLOTS.score);
+      CASINO.SLOTS.reset();
+      break;
+    case 'scores':
+    case 'puntajes':
+      message.channel.send(CASINO.SCORE.getScores());
+      break;
+    case 'score':
+    case 'puntaje':
+    case 'puntos':
+      if(obj.message != '' && !isNaN(obj.message)){
+        CASINO.SCORE.setScore(message.author.username, obj.message);
+        message.channel.send(HELPERS.getRandItem([
+          'Joya',
+          'Entendido',
+          'Roger',
+          'Oka'
+        ]));
+      } else {
+        message.channel.send(CASINO.SCORE.getScore(message.author.username));
+      }
       break;
 
     default:
