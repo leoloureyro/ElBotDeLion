@@ -5,6 +5,7 @@ const tasteDive = require('../controller/taste-dive.js');
 const dotenv = require("dotenv");
 dotenv.config();
 
+// BOT Elements
 const customResponses = {
   greeting: [
     'K c',
@@ -109,6 +110,62 @@ const customResponses = {
     'Muy dudoso'
   ]
 }
+const gamesCollection = [
+  {
+    name: 'Hunt: Showdown',
+    channel: '688424573972381732',
+    role: '823216195150151701',
+    emoji: 'hunt'
+  },
+  {
+    name: 'Hypercharge: Unboxed',
+    channel: '741027177595797575',
+    role: '823216600584552498',
+    emoji: 'hypercharge'
+  },
+  {
+    name: 'Counter-Strike: Global Offensive',
+    channel: '823212932456120340',
+    role: '823217277267869716',
+    emoji: 'csgo'
+  },
+  {
+    name: 'Battlefield 4',
+    channel: '740600487648297000',
+    role: '823217500572745749',
+    emoji: 'bf4'
+  },
+  {
+    name: 'Call of Duty: Warzone',
+    channel: '823219941842223164',
+    role: '823218792624554024',
+    emoji: 'warzone'
+  },
+  {
+    name: 'Left 4 Dead',
+    channel: '691858466083438622',
+    role: '823219395710943243',
+    emoji: 'l4d'
+  },
+  {
+    name: 'Apex Legends',
+    channel: '781621083438710866',
+    role: '823220037695438856',
+    emoji: 'apex'
+  },
+  {
+    name: 'Star Wars: Battlefront 2',
+    channel: '823479764026654760',
+    role: '823471032131518495',
+    emoji: 'swb2'
+  },
+  {
+    name: 'Phasmophobia',
+    channel: '823521400802377729',
+    role: '823470866892718091',
+    emoji: 'phasmophobia'
+  },
+];
 
 // Separa prefijos de mensajes y lo devuelve como objeto
 const handlePrefix = messageTxt => {
@@ -153,9 +210,9 @@ const handleResponse = (obj, message) => {
     case 'idioma':
       message.channel.send(HELPERS.getRandItem(customResponses.idiom));
       break;
-    case 'ayuda':
-      message.channel.send(HELPERS.getRandItem(customResponses.help));
-      break;
+    // case 'ayuda':
+    //   message.channel.send(HELPERS.getRandItem(customResponses.help));
+    //   break;
     case 'profecia':
       message.channel.send(HELPERS.getRandItem(customResponses.profecia));
       break;
@@ -219,6 +276,7 @@ const handleResponse = (obj, message) => {
 
 module.exports = {
   customResponses,
+  gamesCollection,
   handlePrefix,
   handleResponse
 }
