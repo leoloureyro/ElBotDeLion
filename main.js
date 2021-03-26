@@ -56,11 +56,12 @@ client.on('voiceStateUpdate', (oldState, newState) => {
       connectedUsers += channel[1].members.array().length;
     }
   }
-  let countingChannel = guild.channels.cache.get('823628770102870046');
+  let countingChannel = guild.channels.resolve('823628770102870046');
   countingChannel.setName(`🎮 ${connectedUsers} Jugando`, 'Porque necesitamos contar cuántos están activos')
     .catch(console.error);
 });
 
+// ASSIGN GAME ROLES
 async function rolesAssign(){
   // FA!Fetch
   const guild = await client.guilds.fetch('688423468844580895'),

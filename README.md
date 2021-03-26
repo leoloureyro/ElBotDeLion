@@ -157,7 +157,7 @@ Otros comandos de éste módulo que pueden ingresarse después del prefijo `!pkr
 
 
 ## Idioma
-Como buen bot, EbdL es plíglota. Pedile alguna frase en otro idioma para culturizarte ingresando `!idioma`.
+Como buen bot, EbdL es políglota. Pedile alguna frase en otro idioma para culturizarte ingresando `!idioma`.
 
 
 ## Profecia
