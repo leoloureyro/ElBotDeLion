@@ -3,6 +3,7 @@
 ## Index
 * [Info general](#info-general)
 * [Hosting](#hosting)
+* [Admin/Mod FA!Platoon](#adminmod-faplatoon)
 * [BF4 Stats](#bf4-stats)
 * [Recomendaciones](#recomendaciones)
 * [Azar](#azar)
@@ -23,6 +24,14 @@ Para hablarle el prefijo es `!` .
 Está online pequeñas porciones de tiempo que mantengo el diminuto servidor online, pero si alguien más lo quiere hostear alcanza con bajar el repo y pedirme la Api Key de Discord *(no al bot, a mi verdadero yo)*.
 Si está online podés ver quién lo está hosteando con el comando `host`.
 Con los comandos `version` o `v` podés verificar qué versión se está ejecutando.
+
+
+## Admin/Mod FA!platoon
+Algunas funciones del BOT solo funcionan en el Servidor del FA!Platoon *(para el cual fué originalmente creado)*. Estas incluyen, entre otras:
+- [x] Asignar roles a los usuarios según los títulos en común bancados por el servidor
+- [x] Llevar la cuenta de los usuarios activos en los canales de gaming
+- [x] Notificar cuando algún miembro arranca una partida, llamando por roles a otros usuarios a la acción
+- [ ] Gestionar sub-canales de audio con acceso limitado para los títulos que hagan uso de equipos *(próximamente)*
 
 
 ## BF4 Stats
