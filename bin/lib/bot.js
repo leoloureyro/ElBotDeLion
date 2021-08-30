@@ -165,6 +165,12 @@ const gamesCollection = [
     role: '823470866892718091',
     emoji: 'phasmophobia'
   },
+  {
+    name: 'GTFO',
+    channel: '850485300286324827',
+    role: '850485335388979202',
+    emoji: ''
+  },
 ];
 
 // Separa prefijos de mensajes y lo devuelve como objeto
@@ -267,12 +273,36 @@ const handleResponse = (obj, message) => {
         message.channel.send(CASINO.SCORE.getScore(message.author.username));
       }
       break;
+    case 'ayuda':
+    case 'help':
+      message.channel.send("Para ver la lista de comandos casicompleta *(y probablemente desactualizada)* leé mi docu en https://github.com/xtreme696/ElBotDeLion/blob/master/README.md . Acordate que mi prefijo es `!`, sino no te viá'ntender nada.");
+      break;
+    case 'room':
+    case 'sala':
+      let guild = message.guild;
+      let parentCategory = guild.channels.resolve('824991150925414410');
+      guild.channels.create(obj.message, {
+        type: 'voice',
+        parent: parentCategory
+      })
+        .then(newChannel => {
+          message.client.on('voiceStateUpdate', async (oldState, newState) => {
+            if(!newChannel.members.array().length) newChannel.delete('NIU').catch(console.error);
+          })
+        })
+        .catch(console.error);
+
+      message.channel.send("Nuevo canal creado! Si Repl.it no me reinicia el último en salir apaga la luz.");
+      break;
 
     default:
       message.channel.send(HELPERS.getRandItem(customResponses.unknown));
   }
 }
 
+const createVoiceChannel = (name, limit = false) => {
+
+}
 
 module.exports = {
   customResponses,

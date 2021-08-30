@@ -22,7 +22,6 @@ const HELPERS = require('./bin/lib/helpers.js');
 
 // TEXT MESSAGE HANDLER
 client.on('message', message => {
-
   if(message.content.startsWith('!')){
     let messageTxt = message.content.slice(1).trim();
     BOT.handleResponse(BOT.handlePrefix(messageTxt), message);
@@ -41,7 +40,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
   if(newUserChannel != undefined) {
     for(let game of BOT.gamesCollection){
       if(newUserChannel.id == game.channel){
-        let txtChannel = newState.guild.channels.cache.get('823479421515595836');
+        let txtChannel = newState.guild.channels.cache.get('881882285459263549');
         // txtChannel = newState.guild.channels.cache.get('822189945842040883'); // DEBUG
         txtChannel.send(`<@${newState.member.user.id}> está viciando ${newUserChannel.name}.. algún <@&${game.role}> para sumarse?`);
       }
