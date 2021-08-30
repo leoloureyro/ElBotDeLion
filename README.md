@@ -31,8 +31,11 @@ Algunas funciones del BOT solo funcionan en el Servidor del FA!Platoon *(para el
 - [x] Asignar roles a los usuarios según los títulos en común bancados por el servidor
 - [x] Llevar la cuenta de los usuarios activos en los canales de gaming
 - [x] Notificar cuando algún miembro arranca una partida, llamando por roles a otros usuarios a la acción
-- [ ] Gestionar sub-canales de audio con acceso limitado para los títulos que hagan uso de equipos *(próximamente)*
+- [x] Gestionar salas de audio para los títulos que hagan uso de equipos *(próximamente)*
 
+### Gestión de canales
+Para solicitar una sala de audio para vos y tu equipo usá el comando `!sala [nombre de la sala]` o `!room [nombre de la sala]`.
+El nuevo canal temporal se crea en la sección *Salas* y se elimina automáticamente cuando el último integrante lo abandone.
 
 ## BF4 Stats
 No existen *(que haya encontrado)* APIs funcionando a la fecha para levantar stats del Battlefield 4, así que el bot hace un laburo artesanal de 'extracción de información' de un servidor que actualiza la data aprox una vez a la semana.
